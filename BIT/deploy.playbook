@@ -17,10 +17,10 @@
         deployment_path: "{{ deploy_data['deploymentPath'] }}"
         backup_path: "{{ deploy_data['backupPath'] }}"
 
-    - name: Display deploymentPath
-      ansible.builtin.debug:
-        msg: "Deployment Path: {{ deployment_path }}"
-
     - name: Display backupPath
       ansible.builtin.debug:
         msg: "Backup Path: {{ backup_path }}"
+
+    - name: Display deploymentPath
+      ansible.builtin.debug:
+        msg: "Deployment Path: {{ deployment_path }}"
