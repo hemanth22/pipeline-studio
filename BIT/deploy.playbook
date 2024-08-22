@@ -6,13 +6,9 @@
   become_user: bitroidapps
   tasks:
     - name: Read the deploy.json file
-      ansible.builtin.slurp:
-        src: deploy.json
-      register: deploy_file
-
-    - name: Parse JSON content
       ansible.builtin.set_fact:
-        deploy_data: "{{ deploy_file['content'] | b64decode | from_json }}"
+        deploy_data: "{{ lookup('file', 'deploy.json') | from_json }}"
+      register: deploy_file
 
     - name: Extract deploymentPath and backupPath
       ansible.builtin.set_fact:
