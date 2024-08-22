@@ -5,7 +5,7 @@
   tasks:
     - name: Read the deploy.json file
       ansible.builtin.slurp:
-        src: /path/to/deploy.json
+        src: deploy.json
       register: deploy_file
 
     - name: Parse JSON content
