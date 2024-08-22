@@ -24,3 +24,13 @@
     - name: Display deploymentPath
       ansible.builtin.debug:
         msg: "Deployment Path: {{ deployment_path }}"
+
+    - name: Ensure deployment directory exists
+      ansible.builtin.file:
+        path: "{{ deploy_data['deploymentPath'] }}"
+        state: directory
+
+    - name: Ensure backup directory exists
+      ansible.builtin.file:
+        path: "{{ deploy_data['backupPath'] }}"
+        state: directory
