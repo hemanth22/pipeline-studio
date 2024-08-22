@@ -27,8 +27,10 @@
       ansible.builtin.file:
         path: "{{ deploy_data['deploymentPath'] }}"
         state: directory
+        recurse: true
 
     - name: Ensure backup directory exists
       ansible.builtin.file:
         path: "{{ deploy_data['backupPath'] }}"
         state: directory
+        recurse: true
