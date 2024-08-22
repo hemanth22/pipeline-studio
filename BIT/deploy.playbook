@@ -2,6 +2,8 @@
 - name: Read deployment location from deploy.json
   hosts: localhost
   gather_facts: no
+  become: yes
+  become_user: bitroidapps
   tasks:
     - name: Read the deploy.json file
       ansible.builtin.slurp:
