@@ -1,0 +1,26 @@
+---
+- name: Read deployment location from deploy.json
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Read the deploy.json file
+      ansible.builtin.slurp:
+        src: /path/to/deploy.json
+      register: deploy_file
+
+    - name: Parse JSON content
+      ansible.builtin.set_fact:
+        deploy_data: "{{ deploy_file['content'] | b64decode | from_json }}"
+
+    - name: Extract deploymentPath and backupPath
+      ansible.builtin.set_fact:
+        deployment_path: "{{ deploy_data['deploymentPath'] }}"
+        backup_path: "{{ deploy_data['backupPath'] }}"
+
+    - name: Display deploymentPath
+      ansible.builtin.debug:
+        msg: "Deployment Path: {{ deployment_path }}"
+
+    - name: Display backupPath
+      ansible.builtin.debug:
+        msg: "Backup Path: {{ backup_path }}"
