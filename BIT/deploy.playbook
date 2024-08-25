@@ -64,6 +64,13 @@
         path: "{{ deployment_path }}/archive.zip"
         state: absent
 
+    - name: Set execute permissions on checkspace.sh and healthcheck.sh
+      ansible.builtin.shell: |
+        chmod 755 checkspace.sh healthcheck.sh
+      args:
+        chdir: "{{ deployment_path }}"
+        executable: /bin/bash
+
     - name: Execute healthcheck.sh script
       ansible.builtin.command:
         cmd: "sh healthcheck.sh"
