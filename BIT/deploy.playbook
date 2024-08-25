@@ -46,3 +46,9 @@
         path: "{{ deploy_data['backupPath'] }}"
         state: directory
         recurse: true
+
+    - name: Copy archive.zip to the deployment path
+      ansible.builtin.copy:
+        src: "{{ lookup('env', 'WORKSPACE') }}/archive.zip"
+        dest: "{{ deployment_path }}/archive.zip"
+      delegate_to: localhost
