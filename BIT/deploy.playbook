@@ -57,7 +57,6 @@
         src: "{{ deployment_path }}"
         dest: "{{ backup_path }}/{{ lookup('env', 'version') }}"
         remote_src: true
-        recurse: true
 
     - name: Copy archive.zip to the deployment path
       ansible.builtin.copy:
