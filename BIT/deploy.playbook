@@ -54,7 +54,7 @@
 
     - name: Taking backup before deployment
       ansible.builtin.copy:
-        src: "{{ deployment_path }}/archive.zip"
+        src: "{{ deployment_path }}"
         dest: "{{ backup_path }}/{{ lookup('env', 'version') }}"
         remote_src: true
         recurse: true
