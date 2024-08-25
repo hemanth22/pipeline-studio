@@ -1,24 +1,36 @@
 ---
-- name: Read deployment location from deploy.json
+- name: Read username from deploy.json and use it for all tasks
   hosts: localhost
   gather_facts: no
-  become: true
-  become_user: bitroidapps
   tasks:
     - name: Read the deploy.json file
       ansible.builtin.set_fact:
         deploy_data: "{{ lookup('file', 'deploy.json') | from_json }}"
       register: deploy_file
 
+    - name: Extract username
+      ansible.builtin.set_fact:
+        deploy_username: "{{ deploy_data['username'] }}"
+
     - name: Extract deploymentPath and backupPath
       ansible.builtin.set_fact:
         deployment_path: "{{ deploy_data['deploymentPath'] }}"
         backup_path: "{{ deploy_data['backupPath'] }}"
 
+- name: Execute tasks as the extracted user
+  hosts: localhost
+  gather_facts: no
+  become: true
+  become_user: "{{ deploy_username }}"
+  tasks:
+    - name: Display the username
+      ansible.builtin.debug:
+        msg: "Running tasks as user: {{ deploy_username }}"
+
     - name: Display backupPath
       ansible.builtin.debug:
         msg: "Backup Path: {{ backup_path }}"
-
+  
     - name: Display deploymentPath
       ansible.builtin.debug:
         msg: "Deployment Path: {{ deployment_path }}"
