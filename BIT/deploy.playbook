@@ -52,3 +52,24 @@
         src: "{{ lookup('env', 'WORKSPACE') }}/archive.zip"
         dest: "{{ deployment_path }}/archive.zip"
       delegate_to: localhost
+
+    - name: Unzip archive.zip in the deployment path
+      ansible.builtin.unarchive:
+        src: "{{ deployment_path }}/archive.zip"
+        dest: "{{ deployment_path }}"
+        remote_src: true
+
+    - name: Remove archive.zip after extraction
+      ansible.builtin.file:
+        path: "{{ deployment_path }}/archive.zip"
+        state: absent
+
+    - name: Execute healthcheck.sh script
+      ansible.builtin.command:
+        cmd: "sh healthcheck.sh"
+        chdir: "{{ deployment_path }}"
+
+    - name: Execute checkspace.sh script
+      ansible.builtin.command:
+        cmd: "sh checkspace.sh"
+        chdir: "{{ deployment_path }}"
